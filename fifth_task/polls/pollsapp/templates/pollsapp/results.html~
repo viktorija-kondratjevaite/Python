@@ -1,0 +1,17 @@
+<h1>{{ question.question_text }}</h1>
+{% if question.is_open %}
+<ul>
+{% for openQuestion in question.openquestion_set.all %}
+    <li>{{openQuestion.answer_text}}</li>
+{% endfor %}
+</ul>
+{% else %}
+<ul>
+{% for choice in question.choice_set.all %}
+    <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
+{% endfor %}
+</ul>
+<img src="{% url 'pollsapp:chart' question.id %}" alt="img">
+<h1>"{% url 'pollsapp:vote' question.id %}"</h1>
+{% endif %}
+<a href="{% url 'pollsapp:detail' question.id %}">Vote again?</a>
